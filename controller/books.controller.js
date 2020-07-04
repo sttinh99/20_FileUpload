@@ -3,7 +3,8 @@ var shortid = require("shortid");
 var db = require('../db');
 
 module.exports.index = function(req, res) {
-    res.render("./books/index", {
+  var checkAdmin = db.get('users').find({id:req.signedCookies.user}).value();
+  res.render("./books/index", {
       books: db.get("books").value()
     });
   };

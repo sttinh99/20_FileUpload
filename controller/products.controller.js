@@ -8,7 +8,7 @@ module.exports.index = function(req, res) {
     var start = (page-1)*perPage;
     var end = (page*perPage);
     var take = 8;
-    console.log([prePage,page,nextPage]);
+    // console.log([prePage,page,nextPage]);
     res.render("./products/index", {
         // products: db.get("products").value().slice(start,end)
         products: db.get("products").drop(start).take(take).value(),

@@ -24,6 +24,7 @@ var useRoute = require('./routes/books.route');
 var useRoute1 = require('./routes/users.route');
 var useRoute2 = require('./routes/transactions.route');
 var useRouteProducts = require('./routes/products.route');
+var useRouteProfile = require('./routes/profile.route');
 
 var useRoute3 = require('./routes/auth.route');
 
@@ -47,11 +48,12 @@ const dreams = [
 // make all the files in 'public' available
 // https://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
-app.use("/books",/*cookieCount.cookies,*/authMiddleWare.requireAuth,getPermission.getPer,useRoute);
-app.use("/users",/*cookieCount.cookies,*/authMiddleWare.requireAuth,getPermission.getPer,useRoute1);
+app.use("/books",/*cookieCount.cookies,*/authMiddleWare.requireAuth,useRoute);
+app.use("/users",/*cookieCount.cookies,*/authMiddleWare.requireAuth,useRoute1);
 app.use("/transactions",/*cookieCount.cookies,*/authMiddleWare.requireAuth,useRoute2)
 app.use('/auth',useRoute3);
 app.use('/products',authMiddleWare.requireAuth,useRouteProducts);
+app.use('/profile',authMiddleWare.requireAuth,useRouteProfile)
 // app.get("/",function(req,res,next){
 //   res.render('./index');
 // });
