@@ -1,0 +1,20 @@
+const express = require("express");
+var multer  = require('multer');
+var upload = multer({ dest: './public/uploads/'})
+
+var shortid = require("shortid");
+var controller = require('../controller/users.controller');
+var validation = require('../validation/users.validation');
+var db = require('../db');
+
+var router = express.Router();
+
+
+router.get("/",controller.index);
+router.get("/create", controller.getCreate);
+router.post("/create",upload.single('avatar'), validation.postCreate, controller.postCreate);
+router.get('/:id/delete',controller.delete);
+router.get("/:id/update",controller.getUpdate);
+router.post("/update",controller.postUpdate);  
+
+module.exports = router;
