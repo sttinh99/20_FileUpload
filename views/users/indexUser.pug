@@ -25,7 +25,7 @@ block content
             tr
               td=user.name
               td
-                img(src=user.avatar width="48" height="48")
+                img(src=user.avatarUrl width="48" height="48")
               td=user.age
               td
                 a.btn.btn-ligth(href="/users/"+user.id+"/update") Update
@@ -51,7 +51,7 @@ block content
     each user in users   
         .block
             .image
-                img.mr-5(src=user.avatar width="200px", height="200px")
+                img.mr-5(src=user.avatarUrl width="200px", height="200px")
             .content
                 span Name:
                 span=user.name

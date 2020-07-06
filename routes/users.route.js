@@ -1,7 +1,11 @@
 const express = require("express");
 var multer  = require('multer');
-var upload = multer({ dest: './public/uploads/'})
 
+require('../server/cloudinary');
+require('dotenv').config();
+
+// var upload = multer({ dest: './public/uploads/'})
+var upload = require('../middleware/multer')
 var shortid = require("shortid");
 var controller = require('../controller/users.controller');
 var validation = require('../validation/users.validation');

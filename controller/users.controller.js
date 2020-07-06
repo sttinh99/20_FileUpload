@@ -1,6 +1,11 @@
 const express = require("express");
 var shortid = require("shortid");
 var db = require('../db');
+
+var upload = require('../middleware/multer');
+var cloudinary = require('cloudinary');
+require('dotenv').config();
+
 module.exports.index = function(req, res) {
     var profile=db.get("users").value();
     var checkAdmin = db.get('users').find({id:req.signedCookies.user}).value();
@@ -20,9 +25,10 @@ module.exports.index = function(req, res) {
 module.exports.getCreate = function(req, res) {
     res.render("./users/createUser");
 }
-module.exports.postCreate = function(req, res) {
+module.exports.postCreate = async function(req, res) {
+    var result = await cloudinary.v2.uploader.upload(req.file.path);
     req.body.id = shortid.generate();
-    req.body.avatar = req.file.path.split('\\').slice(1).join("\\");
+    req.body.avatarUrl = result.secure_url;
     db.get("users")
       .push(req.body)
       .write();
@@ -39,18 +45,19 @@ module.exports.getUpdate = function(req,res){
     //   res.redirect("");
     // });   
   }
-module.exports.postUpdate = function(req,res){
+module.exports.postUpdate = async function(req,res){
+    var result = await cloudinary.v2.uploader.upload(req.file.path);
     var id = req.body.id;
-    if(!req.body.avatar){
+    if(!req.body.avatarUrl){
       var x = db.get("users").find({id: id})
       .assign({ name: req.body.name})
       .write();
-      x.avatar = req.file.path.split('\\').slice(1).join("\\");
+      x.avatarUrl = result.secure_url;
     }
     else
     {
       var x = db.get("users").find({id: id})
-      .assign({ name: req.body.name},{avatar:req.file.path.split('\\').slice(1).join("\\") })
+      .assign({ name: req.body.name},{avatarUrl:result.secure_url })
       .write();
     }
     res.redirect("/users");
@@ -73,18 +80,20 @@ module.exports.delete = function(req,res){
     var user = db.get("users").find({id: id}).value();
     res.render("./users/profile",{user: user});
   }
-  module.exports.postProfile = function(req,res){
+  module.exports.postProfile = async function(req,res){
     var id = req.body.id;
-    if(!req.body.avatar){
+    var result = await cloudinary.v2.uploader.upload(req.file.path);
+    if(!req.body.avatarUrl){
       var x = db.get("users").find({id: id})
-      .assign({ name: req.body.name})
+      .assign({ name: req.body.name},{age:req.body.age})
       .write();
-      x.avatar = req.file.path.split('\\').slice(1).join("\\");
+      // x.avatar = req.file.path.split('\\').slice(1).join("\\")
+      x.avatarUrl = result.secure_url;
     }
     else
     {
       var x = db.get("users").find({id: id})
-      .assign({ name: req.body.name},{avatar:req.file.path.split('\\').slice(1).join("\\") })
+      .assign({ name: req.body.name},{avatarUrl:result.secure_url },{age:req.body.age})
       .write();
     }
     res.redirect("/users");
