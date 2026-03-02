@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.1",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.1",
     "cloudinary": "^1.22.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -35,6 +35,6 @@
     "express"
   ],
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^3.1.14"
   }
 }
