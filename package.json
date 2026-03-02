@@ -10,7 +10,7 @@
     "start": "nodemon --inspect server.js"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.2.1",
+    "@sendgrid/mail": "^8.1.6",
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.22.0",
     "cookie-parser": "^1.4.5",
